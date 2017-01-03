@@ -5,7 +5,7 @@ set -e
 
 IFS=$'\n'
 
-[ -z "${PREFIX}" ] || PREFIX="${PREFIX}_"
+[ -z "${PREFIX}" ] || PREFIX=`echo "${PREFIX}_" | sed 's@[-. ]@_@g'`
 
 envsubst '${RSNAPSHOT_HOURLY_RETAIN}${RSNAPSHOT_DAILY_RETAIN}${RSNAPSHOT_WEEKLY_RETAIN}${$RSNAPSHOT_MONTHLY_RETAIN}${RSNAPSHOT_YEARLY_RETAIN}${PREFIX}' < /etc/rsnapshot.conf.tpl > /etc/rsnapshot.conf
 for backup in `echo -e $BACKUP_DIRECTORIES`; do
