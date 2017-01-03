@@ -8,14 +8,14 @@ and keep N retantions that can be modified by other environment variables
 
 ```bash
  docker run -e 'BACKUP_DIRECTORIES=/dir1\ ./dir1\\n/dir2\ ./dir2 \
-    --rm mikroways/rsnapshot:2.0.0
+    --rm mikroways/rsnapshot:latest
 ```
 
 This line will run an hoirly backup. If you want to make it explicit:
 
 ```bash
  docker run -e 'BACKUP_DIRECTORIES=/dir1\ ./dir1\\n/dir2\ ./dir2 \
-    --rm mikroways/rsnapshot:2.0.0 hourly
+    --rm mikroways/rsnapshot:latest hourly
 ```
 
 ## Options
@@ -35,6 +35,12 @@ from outside and detect failures
 
 ## Building
 
-There is a Makefile that simplifies the iage building. We provide two images,
+There is a Makefile that simplifies the image building. We provide two images,
 `rancher-rsnapshot` is a modification that always set PREFIX to service stack
 and name of the runing container
+You always need to set TAG environment variable so image is tagged. This is only
+for testing, because we are using docker hub automated builds
+
+```bash
+TAG=1.0.1-test make
+```
