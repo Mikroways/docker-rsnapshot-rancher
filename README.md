@@ -2,13 +2,13 @@
 
 This container provides rsnapshot binary installed on top of alpine Linux. It
 will backup directories specified with `BACKUP_DIRECTORIES` environment variable
-and keep `RETAIN` retantions that can be modified by this environment variable
+and keep retantions that can be modified by  environment variables
 
 ## Usage
 
 ```bash
  docker run -e RETAIN=10 \
-    -e BACKUP_DIRECTORIES=/dir1\ ./dir1\\n/dir2\ ./dir2 \
+    -e BACKUP_DIRECTORIES=/dir1:./dir1;/dir2:./dir2 \
     --rm mikroways/rsnapshot:latest
 ```
 
@@ -16,10 +16,17 @@ and keep `RETAIN` retantions that can be modified by this environment variable
 
 `rsnapshot` is configured with the folowing options:
 
-* **RETAIN:** with a default of 5
-* **EXCLUDE:** rsnapshot exclude option. It can be specified using \n to have
+* **BACKUP_DIRECTORIES:** list of directories to backup. It is a list of source
+  directories and destination directories specified in the following format:
+`source_dir1:destination_dir1;source_dir2:destination_dir2`
+* **RETAIN_HOURLY:** hourly retention. Defaults to 23
+* **RETAIN_DAILY:** Daily retention. Defaults to 6
+* **RETAIN_WEEKLY:** Weekly retention. Defaults to 3
+* **RETAIN_MONTHLY:**  Monthly retention. Defaults to 11
+* **RETAIN_YEARLY:**  Yearly retention. Defaults to 2
+* **EXCLUDE:** rsnapshot exclude option. It can be specified using ; to have
   multiple exclude
-* **INCLUDE:** rsnapshot include option. It can be specified using \n to have
+* **INCLUDE:** rsnapshot include option. It can be specified using ; to have
   multiple include
 
 `rsnapshot` has been modified to always log to stdout so logs can be obtained

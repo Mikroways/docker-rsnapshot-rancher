@@ -4,27 +4,21 @@
 set -e
 set -o noglob
 
-IFS=$'\n'
-
 [ -z "${PREFIX}" ] || mkdir -p /var/rsnapshot/${PREFIX}
 
-envsubst '${RETAIN}${PREFIX}' < /etc/rsnapshot.conf.tpl > /etc/rsnapshot.conf
-for backup in `echo -e $BACKUP_DIRECTORIES`; do
-  AUX=`echo $backup | sed -r  "s@(^[^ ]+) +@\1\t@g"`
-  echo -e "backup\t$AUX" >> /etc/rsnapshot.conf
-done
+envsubst '${RETAIN_HOURLY}${RETAIN_DAILY}${RETAIN_WEEKLY}${RETAIN_MONTHLY}${RETAIN_YEARLY}${PREFIX}' < /etc/rsnapshot.conf.tpl > /etc/rsnapshot.conf
+
+echo $BACKUP_DIRECTORIES | sed 's/:/\t/g' | tr ';' '\n' | sed 's/^/backup\t/' >> /etc/rsnapshot.conf
 
 if [ ! -z "${INCLUDE}" ]; then
-  for include in `echo -e $INCLUDE`; do
-    echo -e "include\t$include" >> /etc/rsnapshot.conf
-  done
+  echo $INCLUDE |  tr ';' '\n' | sed 's/^/include\t/' >> /etc/rsnapshot.conf
 fi
 
 if [ ! -z "${EXCLUDE}" ]; then
-  for exclude in `echo -e $EXCLUDE`; do
-    echo -e "exclude\t$exclude" >> /etc/rsnapshot.conf
-  done
+  echo $EXCLUDE |  tr ';' '\n' | sed 's/^/exclude\t/' >> /etc/rsnapshot.conf
 fi
 
-
+echo Starting rnsapshot with config file:
+cat /etc/rsnapshot.conf
+echo Starting rnsapshot:
 exec rsnapshot "$@"
