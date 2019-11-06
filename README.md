@@ -19,6 +19,9 @@ and keep retantions that can be modified by  environment variables
 * **BACKUP_DIRECTORIES:** list of directories to backup. It is a list of source
   directories and destination directories specified in the following format:
 `source_dir1:destination_dir1;source_dir2:destination_dir2`
+* **BACKUP_REMOTE_DIRECTORIES:** list of remote directories to backup. It is a list of remote source
+  directories and destination directories specified in the following format:
+`user@ip_soruce:source_dir1:destination_dir1;user2@ip_soruce2:source_dir2:destination_dir2`
 * **RETAIN_HOURLY:** hourly retention. Defaults to 23
 * **RETAIN_DAILY:** Daily retention. Defaults to 6
 * **RETAIN_WEEKLY:** Weekly retention. Defaults to 3
