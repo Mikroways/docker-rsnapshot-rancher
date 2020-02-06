@@ -13,7 +13,7 @@ if [ ! -z "${BACKUP_DIRECTORIES}" ]; then
 fi
 
 if [ ! -z "${BACKUP_REMOTE_DIRECTORIES}" ]; then
-	echo $BACKUP_REMOTE_DIRECTORIES | tr ';' '\n' | awk '{sub(/:/,"-")}1' | awk '{sub(/:/,"\t")}1' | awk '{sub(/-/,":")}1' | sed 's/^/backup\t/' >> /etc/rsnapshot.conf
+	echo $BACKUP_REMOTE_DIRECTORIES | tr ';' '\n' | awk '{sub(/:/,"#")}1' | awk '{sub(/:/,"\t")}1' | awk '{sub(/#/,":")}1' | sed 's/^/backup\t/' >> /etc/rsnapshot.conf
 fi
 
 if [ ! -z "${INCLUDE}" ]; then
